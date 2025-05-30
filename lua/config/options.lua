@@ -7,7 +7,7 @@ local env = vim.env
 
 -- Add missing PATH entry in Flatpak extension go binaries
 if env.FLATPAK_ENABLE_SDK_EXT and env.FLATPAK_ENABLE_SDK_EXT ~= "golang" then
-  env.GOBIN = env.HOME .. "/.var/app/io.neovim.nvim/data/golang/bin"
+  env.GOBIN = env.XDG_DATA_HOME .. "/golang/bin"
   env.PATH = env.PATH .. ":" .. env.GOBIN
 end
 
