@@ -4,7 +4,7 @@ return {
   {
     "vimpostor/vim-lumen",
     cond = function()
-      return vim.env.TERM ~= "xterm-contour" or vim.env.TERM ~= "xterm-ghostty"
+      return vim.env.TERM ~= "xterm-ghostty" or vim.env.TERM_PROGRAM ~= "ghostty"
     end,
   },
 }
