@@ -2,17 +2,26 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
-local opt = vim.opt
-local env = vim.env
+-- Add XDG_BIN_PATH
+if not string.find(vim.env.PATH, vim.env.HOME .. "/.local/bin:") then
+  vim.env.PATH = vim.env.HOME .. "/.local/bin:" .. vim.env.PATH
+end
 
 -- Add missing PATH entry in Flatpak extension go binaries
-if env.FLATPAK_ENABLE_SDK_EXT and env.FLATPAK_ENABLE_SDK_EXT ~= "golang" then
-  env.GOBIN = env.XDG_DATA_HOME .. "/golang/bin"
-  env.PATH = env.PATH .. ":" .. env.GOBIN
+if vim.env.FLATPAK_ENABLE_SDK_EXT and vim.env.FLATPAK_ENABLE_SDK_EXT ~= "golang" then
+  vim.env.GOBIN = vim.env.XDG_DATA_HOME .. "/golang/bin"
+  vim.env.PATH = vim.env.PATH .. ":" .. vim.env.GOBIN
 end
 
 -- Limit what `autocmd` can do
-opt.secure = true
+vim.opt.secure = true
+
+-- Set global shell
+if vim.fn.executable("fish") == 1 then
+  vim.opt.shell = "fish"
+else
+  vim.opt.shell = "bash"
+end
 
 -- Disable optional providers
 vim.g.loaded_node_provider = 0
@@ -32,6 +41,3 @@ vim.diagnostic.config({
   --  current_line = true,
   -- },
 })
-
--- Set global shell
-opt.shell = "bash"
